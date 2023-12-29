@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+#include <vector>
+using namespace std;
+
+#define MAXSIZE 100000
+int n,m;
+int num[MAXSIZE];
+bool vis[MAXSIZE];
+vector<pair<int,int>> g[MAXSIZE];
+void DFS(int u, int sum){
+	num[u] = sum;
+	vis[u] = 1;
+	for(int i = 0;i < g[u].size(); i++)
+	{
+		int v = g[u][i].u, u = g[u][i].v;
+		if(!vis[v])
+		{
+			DFS(v,sum^u);
+		}
+	}
+}
+int main(){
+	int u, v, w;
+	scanf("%d",&n);
+	for(int i = 0; i < n - 1; i++){
+		scanf("%d %d %d", &u, &v, &w);
+		g[u].push_back({v,w});
+		g[v].push_back({u,w});
+	}
+	DFS(1,0);
+	scanf("%d",&m);
+	for(int j = 0; j < m; j++){
+		scanf("%d %d", &u, &v);
+		printf("%d",num[u] ^ num[v]);
+	}
+	
+	return 0;
+}
