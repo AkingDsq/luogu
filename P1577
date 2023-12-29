@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int N,K;
+double L[100010];
+bool check(double x){
+	int sum = 0;
+	for(int i = 0; i < N; i++){
+		sum += L[i]/x; 
+	}
+	if(sum >= K) return true;
+	else return false;
+}
+int main(){
+	scanf("%d %d",&N,&K);
+	for(int i = 0; i < N; i++){
+		double temp;
+		scanf("%lf", &temp);
+		L[i] = temp * 100;
+	}
+	sort(L, L + N); 
+	
+	double l = 0, r = L[N - 1];
+	double mid = (l + r + 1)/2;
+	while(l < r){
+		if(check(mid)) l = mid;
+		else r = mid - 1;
+		mid = (l + r + 1)/2;
+	}
+	printf("%.2f", mid/100);
+	return 0;
+} 
