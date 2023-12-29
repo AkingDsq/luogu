@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+queue<int> q;
+stack<int> s;
+priority_queue<int> pq;
+int main(){
+	int n,flag,x;
+	bool count1 = 1, count2 = 1, count3 = 1;
+	int count = 3;
+	scanf("%d",&n);
+	for(int i = 0; i < n; i++){
+		scanf("%d %d", &flag, &x);
+		if(flag == 1){
+			q.push(x);
+			s.push(x);
+			pq.push(x);
+		}
+		else{
+			if(x != q.front() && count1 == 1){
+				count1 = 0;
+				count--;
+			}
+			if(x != s.top() && count2 == 1){
+				count2 = 0;
+				count--;
+			}
+			if(x != pq.top() && count3 == 1){
+				count3 = 0;
+				count--;
+			}
+			q.pop();
+			s.pop();
+			pq.pop();
+		}
+	}
+	if(count >= 2) printf("not sure");
+	else if(count1 == 1) printf("queue");
+	else if(count2 == 1) printf("stack");
+	else if(count3 == 1) printf("priority_queue");
+	else printf("impossible");
+	return 0;
+} 
