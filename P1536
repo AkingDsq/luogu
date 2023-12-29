@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAXSIZE 10000
+int n, m;
+int fa[MAXSIZE];
+
+//查找祖宗 
+int find_set(int j){
+	if(j == fa[j]) return j;
+	else return fa[j] = find_set(fa[j]);
+}
+//合并集合 
+void merge_set(int x, int y){
+	int fx = find_set(x), fy = find_set(y);
+	if(fx != fy) fa[fx] = fy;
+	return;
+}
+int main(){
+	bool flag = 1;
+	while(flag == 1){
+		int ans = 0, u, v;
+		scanf("%d", &n);
+		if(n == 0) return 0;
+		scanf("%d", &m);
+		for(int k = 1; k <= n; k++) fa[k] = k;
+		for(int i = 1; i <= m; i++){
+			scanf("%d %d", &u, &v);
+			merge_set(u, v);
+		}
+		for(int j = 1; j <= n; j++){
+			if(fa[j] == j)	ans++;
+		}
+		printf("%d\n", ans - 1);
+	}
+	return 0;
+}
