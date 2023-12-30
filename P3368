@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAXSIZE 500001
+
+int n, m, d, x, y, z, k, a;
+int tree[MAXSIZE];
+
+int lowbit(int x){
+	return x & (-x);
+}
+
+void update(int x, int d){
+	while(x <= n){
+		tree[x] += d;
+		x += lowbit(x);
+	}
+}
+
+int sum(int x){
+	int sm = 0;
+	while(x > 0){
+		sm += tree[x];
+		x -= lowbit(x);
+	}
+	return sm;
+}
+
+int main(){
+	int flag;
+	int now = 0;
+	scanf("%d %d", &n, &m);
+	for(int s = 0; s < n; s++) tree[s] = 0;
+	for(int i = 1; i <= n; i++){
+		scanf("%d", &a);
+		update(i, a - now);
+		now = a;
+	}
+	for(int j = 0; j < m; j++){
+		scanf("%d", &flag);
+		if(flag == 1){
+			scanf("%d %d %d", &x, &y, &k);
+			update(x, k);
+			update(y + 1, -k);
+		}
+		else if(flag == 2){
+			scanf("%d", &z);
+			printf("%d\n", sum(z));
+		}
+	}
+	return 0;
+}
